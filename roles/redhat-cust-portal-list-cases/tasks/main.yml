@@ -1,0 +1,21 @@
+---
+# tasks file for redhat-cust-portal-list-cases
+# Create case on Red Hat Customer Portal
+- name: List cases on Red Hat Customer Portal
+  ansible.builtin.uri:
+    url: "{{ api_request_url }}"
+    method: POST
+    return_content: true
+    headers:
+      accept: application/json
+      Authorization: "Bearer {{ access_token }}"
+    body_format: json
+    body: 
+      offset: 1
+      maxResults: 10
+  run_once: true
+  register: list_cases_result
+
+- name: Print
+  ansible.builtin.debug:
+    var: list_cases_result
