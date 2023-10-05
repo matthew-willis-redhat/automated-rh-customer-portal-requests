@@ -1,0 +1,22 @@
+---
+# Get current Red Hat customer user; then print user
+- name: Request Current Red Hat Customer User
+  ansible.builtin.uri:
+    url: "{{ api_request_url }}"
+    method: GET
+    return_content: true
+    headers:
+      accept: application/json
+      Authorization: "Bearer {{ access_token }}"
+  run_once: true
+  register: current_user_result
+
+# Set current_user variable
+- name: Set Fact - current_user
+  ansible.builtin.set_fact:
+    current_user: "{{ current_user_result['authenticateduser'] }}"
+
+# Print current_user variable
+- name: Print Current Red Hat Customer User
+  ansible.builtin.debug:
+    var: current_user
