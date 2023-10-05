@@ -1,0 +1,18 @@
+---
+- name: Add Attachment to Support Case on Red Hat Customer Portal
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars_files:
+    - vars/redhat-cust-portal-token.yml
+
+  tasks:
+    - name: "[INCLUDE ROLE] - Red Hat Customer Portal Auth"
+      ansible.builtin.include_role:
+        name: redhat-cust-portal-auth
+
+    - name: "[INCLUDE ROLE] - Red Hat Customer Portal Add File To Case"
+      ansible.builtin.include_role:
+        name: redhat-cust-portal-add-file-to-case
+...
