@@ -3,60 +3,21 @@
 - name: Create case on Red Hat Customer Portal
   ansible.builtin.uri:
     url: "{{ api_request_url }}"
-    method: POST    
+    method: POST
     headers:
       accept: application/json
       Authorization: "Bearer {{ access_token }}"
     body_format: json
-    body: 
+    body:
       product: "{{ case_product }}"
       version: "{{ case_product_version }}"
       summary: "{{ case_summary }}"
       description: "{{ case_description }}"
       severity: "{{ case_severity }}"
     status_code: [200, 201]
-    return_content: true    
+    return_content: true
   run_once: true
   register: create_case_result
-
-# # Set current_user variable
-# - name: Set Fact - current_user
-#   ansible.builtin.set_fact:
-#     current_user: "{{ current_user_result['authenticateduser'] }}"
-
-# - ansible.builtin.set_fact:
-#     create_case_result:
-#       {
-#         "access_control_expose_headers": "Server-Timing",
-#         "authenticateduser": "rh-ee-mawillis",
-#         "authenticationtype": "JWT",
-#         "breadcrumbid": "ID-hydra-rest-prod-48-bldgw-42725-1694769779093-2-12877849",
-#         "changed": false,
-#         "connection": "close",
-#         "content": "{\n  \"location\" : [ \"https://access.redhat.com/hydra/rest/v1/cases/03630697\" ]\n}",
-#         "content_length": "79",
-#         "content_type": "application/json",
-#         "cookies": {
-#             "32c68c8d0b056ab541d1f0726fe13b28": "2ce454f2ac4f41fc8726ecff039be98a"
-#         },
-#         "cookies_string": "32c68c8d0b056ab541d1f0726fe13b28=2ce454f2ac4f41fc8726ecff039be98a",
-#         "date": "Thu, 05 Oct 2023 03:38:16 GMT",
-#         "elapsed": 8,
-#         "failed": false,
-#         "json": {
-#             "location": [
-#                 "https://access.redhat.com/hydra/rest/v1/cases/03630697"
-#             ]
-#         },
-#         "msg": "OK (79 bytes)",
-#         "redirected": false,
-#         "server": "Jetty(9.2.19.v20160908)",
-#         "server_timing": "traceparent;desc=\"00-3fb7c0870804bcc7c40f4fc236a601a7-ff2d813773c11c76-01\"",
-#         "set_cookie": "32c68c8d0b056ab541d1f0726fe13b28=2ce454f2ac4f41fc8726ecff039be98a; path=/; HttpOnly; Secure; SameSite=None",
-#         "status": 201,
-#         "url": "https://api.access.redhat.com/support//v1/cases",
-#         "user_agent": "ansible-httpget"
-#     }
 
 - name: Set case_number fact
   ansible.builtin.set_fact:
