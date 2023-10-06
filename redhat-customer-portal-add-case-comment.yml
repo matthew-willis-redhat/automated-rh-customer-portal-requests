@@ -12,6 +12,10 @@
       ansible.builtin.include_role:
         name: redhat-cust-portal-auth
 
+    # - name: "[INCLUDE ROLE] - Red Hat Customer Portal Get Current User"
+    #   ansible.builtin.include_role:
+    #     name: redhat-cust-portal-get-current-user
+
     - name: "[INCLUDE ROLE] - Red Hat Customer Portal Add Case Comment"
       ansible.builtin.include_role:
         name: redhat-cust-portal-add-case-comment

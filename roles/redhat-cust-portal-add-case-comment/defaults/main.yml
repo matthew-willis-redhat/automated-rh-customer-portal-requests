@@ -1,2 +1,8 @@
 ---
 # defaults file for redhat-cust-portal-add-case-comment
+api_baseurl: https://api.access.redhat.com/support/
+api_endpoint: "v1/cases/{{ case_number }}/comments"
+api_request_url: "{{ api_baseurl }}/{{ api_endpoint }}"
+
+case_number: "03631579"
+case_comment: "This is an automated test comment."

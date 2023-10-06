@@ -10,7 +10,29 @@ Warning: Please use password management that is consistent with networking best 
 
 To generate an offline token, visit the [API Tokens page](https://access.redhat.com/management/api) and click the Generate Token button.
 
+## Ansible setup
 
+### Ansible Vault file for offline token
+
+After generating your [offline token](#generating-a-new-offline-token), create a new file in the `vars/` directory called `redhat-cust-portal-token.yml`
+
+Run this Ansible command to create an Ansible Vault, encrypted file.
+
+`ansible-vault create redhat-cust-portal-token.yml`
+
+```yaml
+---
+rh_cust_portal_token: *INSERT_OFFLINE_TOKEN_HERE*
+...
+```
+
+!!!note
+
+    Remember this token is **YOUR** login and should be treated as such. Be mindful to not share this file with others.
+
+If the offline token is invalid or if the playbooks are unable to authenticate, try regenerating the token.
+
+### 
 
 ## References
 
