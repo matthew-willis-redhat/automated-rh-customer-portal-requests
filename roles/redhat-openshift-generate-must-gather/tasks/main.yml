@@ -1,0 +1,57 @@
+---
+# tasks file for redhat-openshift-generate-must-gather
+
+# Check if OpenShift CLI tools are installed
+- name: Check if OC is installed
+  block:
+    - name: Check for OC installer
+      ansible.builtin.stat:
+        path: /usr/local/bin/oc
+      register: oc_install
+
+    - name: Fail playbook if OC installer isn't installed
+      ansible.builtin.assert:
+        that: oc_install['stat']['exists'] != false
+        fail_msg:
+          - oc is currently not installed on host. Please find the verify and install a valid version of oc.
+          - https://mirror.openshift.com/pub/openshift-v4/
+
+# Check if clk
+# Generate must-gather
+- name: Generate must-gather
+  block:
+
+    - name: Get date and time for timestamp
+      ansible.builtin.setup:
+        gather_subset:
+          - date_time
+
+    - name: Set must-gather destination directory
+      ansible.builtin.set_fact:
+        must_gather_dir: "/tmp/must-gather.local.{{ ansible_date_time['iso8601_basic'] }}"
+
+    - name: Generate Cluster must-gather 
+      ansible.builtin.shell:
+        cmd: "oc adm must-gather --dest-dir {{ must_gather_dir }}"
+      register: must_gather_results
+
+    - name: Print must-gather results
+      ansible.builtin.debug:
+        msg: "{{ must_gather_results['stdout_lines'] }}"
+
+    # Archive must-gather
+    - name: Archive must-gather directory
+      ansible.builtin.archive:
+        path: "{{ must_gather_dir }}"
+        dest: "/tmp/must-gather-{{ ansible_date_time['iso8601_basic'] }}.tar.gz"
+        format: gz
+        force_archive: true
+        mode: "0644"
+
+    - name: Set fact for must-gather.tar.gz
+      ansible.builtin.set_fact:
+        must_gather_filename: "/tmp/must-gather-{{ ansible_date_time['iso8601_basic'] }}.tar.gz"
+
+    - name: Print must-gather.tar.gz file location
+      ansible.builtin.debug:
+        msg: "{{ must_gather_filename }}"

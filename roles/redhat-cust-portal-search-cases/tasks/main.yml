@@ -1,0 +1,20 @@
+---
+# Get cases from Red Hat Customer Portal, search by customer user
+- name: Request cases based on search of Red Hat Customer Portal using SSO Username
+  ansible.builtin.uri:
+    url: "{{ api_request_url }}"
+    method: POST
+    headers:
+      accept: application/json
+      Authorization: "Bearer {{ access_token }}"
+    body_format: json
+    body:
+      q: "{{ case_search_sso_username }}"
+    status_code: [200, 201]
+    return_content: true
+  run_once: true
+  register: case_search_results
+
+- name: Print Case Search Results
+  ansible.builtin.debug:
+    var: case_search_results
