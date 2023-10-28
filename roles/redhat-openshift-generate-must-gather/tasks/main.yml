@@ -9,42 +9,63 @@
         path: /usr/local/bin/oc
       register: oc_install
 
+    # Install OpenShift CLI tools if the oc command is not found in /usr/local/bin/
     - name: Install OpenShift Client
       ansible.builtin.include_tasks:
         file: install-openshift-client.yml
       when: oc_install['stat']['exists'] == false
 
-    # - name: Fail playbook if OC installer isn't installed
-    #   ansible.builtin.assert:
-    #     that: oc_install['stat']['exists'] != false
-    #     fail_msg:
-    #       - oc is currently not installed on host. Please find the verify and install a valid version of oc.
-    #       - https://mirror.openshift.com/pub/openshift-v4/
+# Check if KUBECONFIG or ~/.kube/config exists
+- name: "Check if KUBECONFIG or ~/.kube/config exists"
+  block:
 
-# Check if clk
-# Generate must-gather
+    # Search of ~/.kube/config file and store results
+    - name: "Check for ~/.kube/config file"
+      ansible.builtin.stat:
+        path: "~/.kube/config"
+      register: kubeconfig_file
+
+    # Discover if the KUBECONFIG environment variable is set
+    - name: Discover KUBECONFIG environment variable is set
+      ansible.builtin.set_fact:
+        kubeconfig: "{{ lookup('ansible.builtin.env', 'KUBECONFIG', default='~/.kube/config') }}"
+
+    # Validate and proceed if either the KUBECONFIG environment variable is defined or if the 
+    # ~/.kube/config file exists. There are no checks to validate if this is the correct cluster.
+    - name: "Assert KUBECONFIG or or ~/.kube/config exists"
+      ansible.builtin.assert:
+        that: >
+          (kubeconfig is defined and kubeconfig | length) > 0 or
+          (kubeconfig_file['stat']['exists'] != false)
+
+# Generate must-gather for cluster using 'oc adm must-gather' command
 - name: Generate must-gather
   block:
 
+    # Collect date and time from localhost to add to the output of the must-gather filename
     - name: Get date and time for timestamp
       ansible.builtin.setup:
         gather_subset:
           - date_time
 
+    # Set must-gather directory variable. This is defined with a timestamp.
     - name: Set must-gather destination directory
       ansible.builtin.set_fact:
         must_gather_dir: "/tmp/must-gather.local.{{ ansible_date_time['iso8601_basic'] }}"
-
+    
+    # Generate must-gather using 'oc adm must-gather' command. Had to utilize the shell
+    # module in order to execute the 'oc' command.
     - name: Generate Cluster must-gather
       ansible.builtin.shell:
         cmd: "oc adm must-gather --dest-dir {{ must_gather_dir }}"
       register: must_gather_results
 
+    # Display must-gather results for output
     - name: Print must-gather results
       ansible.builtin.debug:
         msg: "{{ must_gather_results['stdout_lines'] }}"
 
-    # Archive must-gather
+    # Archive must-gather directory into a tar.gz file
     - name: Archive must-gather directory
       ansible.builtin.archive:
         path: "{{ must_gather_dir }}"
@@ -53,10 +74,12 @@
         force_archive: true
         mode: "0644"
 
+    # Set must-gather.tar.gz filename variable
     - name: Set fact for must-gather.tar.gz
       ansible.builtin.set_fact:
         must_gather_filename: "/tmp/must-gather-{{ ansible_date_time['iso8601_basic'] }}.tar.gz"
 
+    # Display must-gather.tar.gz filename location
     - name: Print must-gather.tar.gz file location
       ansible.builtin.debug:
         msg: "{{ must_gather_filename }}"
