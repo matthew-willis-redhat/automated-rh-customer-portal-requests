@@ -1,5 +1,5 @@
 ---
-# tasks file for redhat-customer-portal-auth
+# tasks file for redhat-customer-portal-authentication
 
 # Check if redhat_customer_portal_token is defined and length > 0
 - name: Check if redhat_customer_portal_token is defined

@@ -8,9 +8,9 @@
     - vars/redhat-customer-portal-token.yml
 
   tasks:
-    - name: "[INCLUDE ROLE] - Red Hat Customer Portal Auth"
+    - name: "[INCLUDE ROLE] - Red Hat Customer Portal Authentication"
       ansible.builtin.include_role:
-        name: redhat-customer-portal-auth
+        name: redhat-customer-portal-authentication
 
     - name: "[INCLUDE ROLE] - Red Hat Customer Portal Add File To Case"
       ansible.builtin.include_role:

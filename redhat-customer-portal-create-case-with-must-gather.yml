@@ -6,7 +6,6 @@
 
   vars_files:
     - vars/redhat-customer-portal-token.yml
-    - vars/cluster-secret.yml
     - vars/redhat-create-customer-support-case.yml
 
   tasks:
@@ -20,13 +19,13 @@
           - '-e "ocp_cluster_name=<cluster_name>"'
           - '-e "ocp_base_domain=<base_domain>"'
 
-    - name: "[INCLUDE ROLE] - Red Hat Customer Portal Auth"
+    - name: "[INCLUDE ROLE] - Red Hat OpenShift Validate Kube Config"
       ansible.builtin.include_role:
-        name: redhat-customer-portal-auth
+        name: redhat-openshift-validate-kube-config
 
-    - name: "[INCLUDE ROLE] - Red Hat OpenShift Cluster Login"
+    - name: "[INCLUDE ROLE] - Red Hat Customer Portal Authentication"
       ansible.builtin.include_role:
-        name: redhat-openshift-cluster-login
+        name: redhat-customer-portal-authentication
 
     - name: "[INCLUDE ROLE] - Red Hat OpenShift Generate Must Gather"
       ansible.builtin.include_role:
