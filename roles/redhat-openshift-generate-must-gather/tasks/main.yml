@@ -37,6 +37,8 @@
         that: >
           (kubeconfig is defined and kubeconfig | length) > 0 or
           (kubeconfig_file['stat']['exists'] != false)
+        fail_msg: 
+          - "~/.kube/config is missing or KUBECONFIG environment variable is undefined."
 
 # Generate must-gather for cluster using 'oc adm must-gather' command
 - name: Generate must-gather
