@@ -9,11 +9,11 @@
       Authorization: "Bearer {{ access_token }}"
     body_format: json
     body:
-      product: "{{ case_product }}"
-      version: "{{ case_product_version }}"
-      summary: "{{ case_summary }}"
-      description: "{{ case_description }}"
-      severity: "{{ case_severity }}"
+      product: "{{ redhat_case_product }}"
+      version: "{{ redhat_case_product_version }}"
+      summary: "{{ redhat_case_summary }}"
+      description: "{{ redhat_case_description }}"
+      severity: "{{ redhat_case_severity }}"
     status_code: [200, 201]
     return_content: true
   run_once: true
