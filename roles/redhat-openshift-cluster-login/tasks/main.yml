@@ -1,3 +1,4 @@
+---
 - name: Get API Token from OCP Cluster
   community.okd.openshift_auth:
     host: "{{ host_api_url }}"
@@ -9,3 +10,4 @@
 - name: Assert authentication
   ansible.builtin.assert:
     that: ocp_auth['openshift_auth']['api_key'] is defined
+...

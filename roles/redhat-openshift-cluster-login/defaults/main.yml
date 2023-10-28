@@ -1,0 +1,10 @@
+---
+# OCP Cluster Name variable
+ocp_cluster_name:
+
+# OCP Cluster Base Domain variable
+ocp_base_domain:
+
+# Host API Port and URL variables
+host_api_port: 6443
+host_api_url: "https://api.{{ ocp_cluster_name }}.{{ ocp_base_domain }}:{{ host_api_port }}"

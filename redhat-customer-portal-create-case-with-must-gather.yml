@@ -13,6 +13,7 @@
   vars_files:
     - vars/redhat-cust-portal-token.yml
     - vars/cluster-secret.yml
+    - vars/redhat-create-customer-support-case.yml
 
   tasks:
     - name: Verify Cluster Information is provided
@@ -25,21 +26,21 @@
           - '-e "cluster_name=<cluster_name>"'
           - '-e "base_domain=<base_domain>"'
 
-    # - name: "[INCLUDE ROLE] - Red Hat Customer Portal Auth"
-    #   ansible.builtin.include_role:
-    #     name: redhat-cust-portal-auth
-
-    # - name: "[INCLUDE ROLE] - Red Hat Customer Portal Create Case"
-    #   ansible.builtin.include_role:
-    #     name: redhat-cust-portal-create-case
+    - name: "[INCLUDE ROLE] - Red Hat Customer Portal Auth"
+      ansible.builtin.include_role:
+        name: redhat-cust-portal-auth
 
     - name: "[INCLUDE ROLE] - Login into Red Hat OpenShift Cluster"
       ansible.builtin.include_role:
-        name: cluster-login
+        name: redhat-openshift-cluster-login
 
     - name: "[INCLUDE ROLE] - Generate Must Gather"
       ansible.builtin.include_role:
         name: redhat-openshift-generate-must-gather
+
+    # - name: "[INCLUDE ROLE] - Red Hat Customer Portal Create Case"
+    #   ansible.builtin.include_role:
+    #     name: redhat-cust-portal-create-case
 
     # - name: "[INCLUDE ROLE] - Red Hat Customer Portal Add Comment to Case"
     #   ansible.builtin.include_role:
