@@ -54,7 +54,7 @@
     - name: Set must-gather destination directory
       ansible.builtin.set_fact:
         must_gather_dir: "/tmp/must-gather.local.{{ ansible_date_time['iso8601_basic'] }}"
-    
+
     # Generate must-gather using 'oc adm must-gather' command. Had to utilize the shell
     # module in order to execute the 'oc' command.
     - name: Generate Cluster must-gather

@@ -1,0 +1,32 @@
+---
+# Check if redhat_customer_support_case_number is defined
+- name: Check if redhat_customer_support_case_number variable is defined and length > 0
+  ansible.builtin.assert:
+    that:
+      - redhat_customer_support_case_number is defined and redhat_customer_support_case_number | length > 0
+    fail_msg:
+      - "Red Hat Customer Support case number not provided."
+      - "-e 'redhat_customer_support_case_number=<case number>'"
+
+# Add comment to case
+- name: Add comment to case on Red Hat Customer Portal
+  ansible.builtin.uri:
+    url: "{{ api_request_url }}"
+    method: POST
+    headers:
+      accept: application/json
+      Authorization: "Bearer {{ access_token }}"
+    body_format: json
+    body:
+      caseNumber: "{{ redhat_customer_support_case_number }}"
+      commentBody: "{{ redhat_customer_support_case_comment }}"
+      contentType: "plaintext"
+    status_code: [200, 201]
+    return_content: true
+  run_once: true
+  register: add_case_comment_result
+
+# Print add_case_comment_results variable
+- name: Print Add Case Comment Results
+  ansible.builtin.debug:
+    var: add_case_comment_result['json']

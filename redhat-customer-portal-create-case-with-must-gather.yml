@@ -4,14 +4,8 @@
   connection: local
   gather_facts: false
 
-  vars:
-    cluster_name:
-    base_domain:
-    host_api_port: 6443
-    host_api_url: "https://api.{{ cluster_name }}.{{ base_domain }}:{{ host_api_port }}"
-
   vars_files:
-    - vars/redhat-cust-portal-token.yml
+    - vars/redhat-customer-portal-token.yml
     - vars/cluster-secret.yml
     - vars/redhat-create-customer-support-case.yml
 
@@ -19,34 +13,34 @@
     - name: Verify Cluster Information is provided
       ansible.builtin.assert:
         that:
-          - cluster_name is defined and cluster_name | length > 0
-          - base_domain is defined and base_domain | length > 0
+          - ocp_cluster_name is defined and ocp_cluster_name | length > 0
+          - ocp_base_domain is defined and ocp_base_domain | length > 0
         fail_msg:
           - "Check cluster information is properly provided"
-          - '-e "cluster_name=<cluster_name>"'
-          - '-e "base_domain=<base_domain>"'
+          - '-e "ocp_cluster_name=<cluster_name>"'
+          - '-e "ocp_base_domain=<base_domain>"'
 
     - name: "[INCLUDE ROLE] - Red Hat Customer Portal Auth"
       ansible.builtin.include_role:
-        name: redhat-cust-portal-auth
+        name: redhat-customer-portal-auth
 
-    - name: "[INCLUDE ROLE] - Login into Red Hat OpenShift Cluster"
+    - name: "[INCLUDE ROLE] - Red Hat OpenShift Cluster Login"
       ansible.builtin.include_role:
         name: redhat-openshift-cluster-login
 
-    - name: "[INCLUDE ROLE] - Generate Must Gather"
+    - name: "[INCLUDE ROLE] - Red Hat OpenShift Generate Must Gather"
       ansible.builtin.include_role:
         name: redhat-openshift-generate-must-gather
 
     # - name: "[INCLUDE ROLE] - Red Hat Customer Portal Create Case"
     #   ansible.builtin.include_role:
-    #     name: redhat-cust-portal-create-case
+    #     name: redhat-customer-portal-create-case
 
     # - name: "[INCLUDE ROLE] - Red Hat Customer Portal Add Comment to Case"
     #   ansible.builtin.include_role:
-    #     name: redhat-cust-portal-add-case-comment
+    #     name: redhat-customer-portal-add-case-comment
 
     # - name: "[INCLUDE ROLE] - Red Hat Customer Portal Add File to Case"
     #   ansible.builtin.include_role:
-    #     name: redhat-cust-portal-add-file-to-case
+    #     name: redhat-customer-portal-add-file-to-case
 ...

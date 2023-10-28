@@ -1,7 +1,0 @@
----
-# defaults file for redhat-cust-portal-list-cases
-api_baseurl: https://api.access.redhat.com/support/
-api_endpoint: search/v2/cases
-api_request_url: "{{ api_baseurl }}/{{ api_endpoint }}"
-
-case_search_sso_username: rh-ee-mawillis

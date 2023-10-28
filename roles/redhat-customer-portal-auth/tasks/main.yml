@@ -1,0 +1,32 @@
+---
+# tasks file for redhat-customer-portal-auth
+
+# Check if redhat_customer_portal_token is defined and length > 0
+- name: Check if redhat_customer_portal_token is defined
+  ansible.builtin.assert:
+    that: 
+      - redhat_customer_portal_token is defined and redhat_customer_portal_token | length > 0
+    fail_msg:
+      - "Update the redhat_customer_portal_token variable in role defaults/main.yml"
+      - "Visit https://access.redhat.com/management/api for more details"
+
+# Refresh redhat_customer_portal_token; creating an authorized bearer token
+- name: Request Red Hat Customer Portal Token
+  ansible.builtin.uri:
+    url: "{{ auth_api_baseurl }}"
+    method: POST
+    return_content: true
+    body_format: form-urlencoded
+    headers:
+      accept: application/json
+    body:
+      grant_type: refresh_token
+      client_id: rhsm-api
+      refresh_token: "{{ redhat_customer_portal_token }}"
+  run_once: true
+  register: redhat_customer_portal_token_request
+
+# Define access_token variable
+- name: Set Fact - access_token
+  ansible.builtin.set_fact:
+    access_token: "{{ redhat_customer_portal_token_request['json']['access_token'] }}"

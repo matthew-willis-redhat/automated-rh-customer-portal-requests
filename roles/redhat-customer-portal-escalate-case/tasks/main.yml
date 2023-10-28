@@ -1,0 +1,10 @@
+---
+# tasks file for redhat-customer-portal-escalate-case
+# Check if redhat_customer_support_case_number is defined
+- name: Check if redhat_customer_support_case_number variable is defined and length > 0
+  ansible.builtin.assert:
+    that:
+      - redhat_customer_support_case_number is defined and redhat_customer_support_case_number | length > 0
+    fail_msg:
+      - "Red Hat Customer Support case number not provided."
+      - "-e 'redhat_customer_support_case_number=<case number>'"

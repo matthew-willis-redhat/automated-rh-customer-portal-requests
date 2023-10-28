@@ -1,8 +1,0 @@
----
-api_baseurl: https://api.access.redhat.com/support/
-api_endpoint: "v1/cases/{{ case_number }}/notifiedusers"
-api_request_url: "{{ api_baseurl }}/{{ api_endpoint }}"
-
-case_number: "03631579"
-case_notify_users:
-  - "rh-ee-mawillis"

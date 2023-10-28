@@ -5,18 +5,18 @@
   gather_facts: false
 
   vars_files:
-    - vars/redhat-cust-portal-token.yml
+    - vars/redhat-customer-portal-token.yml
 
   tasks:
     - name: "[INCLUDE ROLE] - Red Hat Customer Portal Auth"
       ansible.builtin.include_role:
-        name: redhat-cust-portal-auth
+        name: redhat-customer-portal-auth
 
     # - name: "[INCLUDE ROLE] - Red Hat Customer Portal Get Current User"
     #   ansible.builtin.include_role:
-    #     name: redhat-cust-portal-get-current-user
+    #     name: redhat-customer-portal-get-current-user
 
     - name: "[INCLUDE ROLE] - Red Hat Customer Portal Add Case Comment"
       ansible.builtin.include_role:
-        name: redhat-cust-portal-add-case-comment
+        name: redhat-customer-portal-add-case-comment
 ...

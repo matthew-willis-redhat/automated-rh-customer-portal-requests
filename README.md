@@ -14,15 +14,15 @@ To generate an offline token, visit the [API Tokens page](https://access.redhat.
 
 ### Ansible Vault file for offline token
 
-After generating your [offline token](#generating-a-new-offline-token), create a new file in the `vars/` directory called `redhat-cust-portal-token.yml`
+After generating your [offline token](#generating-a-new-offline-token), create a new file in the `vars/` directory called `redhat-customer-portal-token.yml`
 
 Run this Ansible command to create an Ansible Vault, encrypted file.
 
-`ansible-vault create redhat-cust-portal-token.yml`
+`ansible-vault create redhat-customer-portal-token.yml`
 
 ```yaml
 ---
-rh_cust_portal_token: *INSERT_OFFLINE_TOKEN_HERE*
+rh_customer_portal_token: *INSERT_OFFLINE_TOKEN_HERE*
 ...
 ```
 

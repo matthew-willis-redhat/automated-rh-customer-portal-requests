@@ -5,5 +5,5 @@
   gather_facts: false
 
   vars_files:
-    - vars/redhat-cust-portal-token.yml
+    - vars/redhat-customer-portal-token.yml
     - vars/cluster-information.yml

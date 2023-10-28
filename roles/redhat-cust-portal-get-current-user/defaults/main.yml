@@ -1,6 +1,0 @@
----
-# defaults file for redhat-cust-portal-list-current-user
-api_baseurl: https://api.access.redhat.com/support/
-api_endpoint: v1/accounts/current
-api_request_url: "{{ api_baseurl }}/{{ api_endpoint }}"
-...

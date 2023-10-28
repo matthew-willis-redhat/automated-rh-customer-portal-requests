@@ -1,0 +1,3 @@
+---
+# defaults file for redhat-customer-portal-auth
+auth_api_baseurl: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
