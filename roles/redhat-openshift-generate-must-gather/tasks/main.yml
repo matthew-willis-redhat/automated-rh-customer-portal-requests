@@ -9,12 +9,17 @@
         path: /usr/local/bin/oc
       register: oc_install
 
-    - name: Fail playbook if OC installer isn't installed
-      ansible.builtin.assert:
-        that: oc_install['stat']['exists'] != false
-        fail_msg:
-          - oc is currently not installed on host. Please find the verify and install a valid version of oc.
-          - https://mirror.openshift.com/pub/openshift-v4/
+    - name: Install OpenShift Client
+      ansible.builtin.include_tasks:
+        file: install-openshift-client.yml
+      when: oc_install['stat']['exists'] == false
+
+    # - name: Fail playbook if OC installer isn't installed
+    #   ansible.builtin.assert:
+    #     that: oc_install['stat']['exists'] != false
+    #     fail_msg:
+    #       - oc is currently not installed on host. Please find the verify and install a valid version of oc.
+    #       - https://mirror.openshift.com/pub/openshift-v4/
 
 # Check if clk
 # Generate must-gather
@@ -30,7 +35,7 @@
       ansible.builtin.set_fact:
         must_gather_dir: "/tmp/must-gather.local.{{ ansible_date_time['iso8601_basic'] }}"
 
-    - name: Generate Cluster must-gather 
+    - name: Generate Cluster must-gather
       ansible.builtin.shell:
         cmd: "oc adm must-gather --dest-dir {{ must_gather_dir }}"
       register: must_gather_results

@@ -1,0 +1,27 @@
+---
+#openshift_version is in role defaults/main.yml; can be specified using -e "openshift_version='version'" when running playbook
+- name: Create OpenShift Client Directory
+  ansible.builtin.file:
+    path: "{{ openshift_client_tmp_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: Download OpenShift Client
+  ansible.builtin.get_url:
+    url: "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/{{ openshift_version }}/openshift-client-linux.tar.gz"
+    dest: "/{{ openshift_client_tmp_dir }}/ocp-{{ openshift_version }}"
+    mode: "0644"
+
+# openshift_client_tmp_dir is in role defaults/main.yml; can be specified using -e "openshift_client_tmp_dir='/bin/directory'" when running playbook
+- name: Download and Unarchive OpenShift Client to {{ openshift_client_tmp_dir }}
+  ansible.builtin.unarchive:
+    src: "/{{ openshift_client_tmp_dir }}/ocp-{{ openshift_version }}"
+    dest: "{{ openshift_client_tmp_dir }}"
+
+- name: Move OpenShift Client to {{ openshift_client_bin_dir }}
+  ansible.builtin.copy:
+    src: "{{ openshift_client_tmp_dir }}/oc"
+    dest: "{{ openshift_client_bin_dir }}"
+    mode: "0755"
+  become: true
+...
