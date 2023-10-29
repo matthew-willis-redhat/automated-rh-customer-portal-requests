@@ -19,21 +19,21 @@
           - '-e "ocp_cluster_name=<cluster_name>"'
           - '-e "ocp_base_domain=<base_domain>"'
 
-    - name: "[INCLUDE ROLE] - Red Hat OpenShift Validate Kube Config"
-      ansible.builtin.include_role:
-        name: redhat-openshift-validate-kube-config
+    # - name: "[INCLUDE ROLE] - Red Hat OpenShift Validate Kube Config"
+    #   ansible.builtin.include_role:
+    #     name: redhat-openshift-validate-kube-config
 
     - name: "[INCLUDE ROLE] - Red Hat Customer Portal Authentication"
       ansible.builtin.include_role:
         name: redhat-customer-portal-authentication
 
-    - name: "[INCLUDE ROLE] - Red Hat OpenShift Generate Must Gather"
-      ansible.builtin.include_role:
-        name: redhat-openshift-generate-must-gather
-
-    # - name: "[INCLUDE ROLE] - Red Hat Customer Portal Create Case"
+    # - name: "[INCLUDE ROLE] - Red Hat OpenShift Generate Must Gather"
     #   ansible.builtin.include_role:
-    #     name: redhat-customer-portal-create-case
+    #     name: redhat-openshift-generate-must-gather
+
+    - name: "[INCLUDE ROLE] - Red Hat Customer Portal Create Case"
+      ansible.builtin.include_role:
+        name: redhat-customer-portal-create-case
 
     # - name: "[INCLUDE ROLE] - Red Hat Customer Portal Add Comment to Case"
     #   ansible.builtin.include_role:

@@ -80,9 +80,16 @@
     - name: Set fact for must-gather.tar.gz
       ansible.builtin.set_fact:
         must_gather_filename: "/tmp/must-gather-{{ ansible_date_time['iso8601_basic'] }}.tar.gz"
+    
+    # Set must-gather.tar.gz filename variable for Red Hat Customer Support Attachment
+    - name: Set fact for must-gather.tar.gz attachment filename for Red Hat Customer Support Attachment
+      ansible.builtin.set_fact:
+        redhat_customer_support_attach_file: "{{ must_gather_filename }}"
 
     # Display must-gather.tar.gz filename location
     - name: Print must-gather.tar.gz file location
       ansible.builtin.debug:
         msg: "{{ must_gather_filename }}"
+    
+
 ...

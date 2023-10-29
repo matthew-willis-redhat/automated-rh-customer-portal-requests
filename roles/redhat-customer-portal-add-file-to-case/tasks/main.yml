@@ -8,3 +8,26 @@
     fail_msg:
       - "Red Hat Customer Support case number not provided."
       - "-e 'redhat_customer_support_case_number=<case number>'"
+
+# Attach file to Red Hat Customer Support case
+- name: Attach file to Red Hat Customer Support case {{ redhat_customer_support_case_number }}
+  ansible.builtin.uri:
+    url: "{{ api_request_url }}"
+    method: POST
+    body_format: form-multipart
+    headers:
+      accept: application/json
+      Authorization: "Bearer {{ access_token }}"
+    body:
+      file:
+        filename: "{{ redhat_customer_support_attach_file }}"
+    status_code: [200, 201]
+    return_content: true
+  run_once: true
+  register: add_file_to_case_results
+
+# Print add_file_to_case_results variable
+- name: Print Add File to Case Results
+  ansible.builtin.debug:
+    var: add_file_to_case_results['json']
+
