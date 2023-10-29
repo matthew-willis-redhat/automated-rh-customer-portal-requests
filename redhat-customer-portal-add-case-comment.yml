@@ -5,6 +5,7 @@
   gather_facts: false
 
   vars_files:
+    - vars/redhat-create-customer-support-case.yml
     - vars/redhat-customer-portal-token.yml
 
   tasks:

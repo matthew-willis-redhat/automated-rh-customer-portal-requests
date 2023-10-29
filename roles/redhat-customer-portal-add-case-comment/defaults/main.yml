@@ -4,5 +4,5 @@ api_baseurl: https://api.access.redhat.com/support/
 api_endpoint: "v1/cases/{{ redhat_customer_support_case_number }}/comments"
 api_request_url: "{{ api_baseurl }}/{{ api_endpoint }}"
 
-redhat_customer_support_case_number: 
+redhat_customer_support_case_number:
 redhat_customer_support_case_comment:

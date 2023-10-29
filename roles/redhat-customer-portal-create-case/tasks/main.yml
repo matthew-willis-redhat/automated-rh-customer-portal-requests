@@ -19,9 +19,13 @@
   run_once: true
   register: create_case_result
 
+- name: Print Create Case Result
+  ansible.builtin.debug:
+    var: create_case_result
+
 - name: Set redhat_customer_support_case_number fact
   ansible.builtin.set_fact:
-    redhat_customer_support_case_number: "{{ create_case_result['json']['location'] | regex_findall('.*/([0-9]+)') }}"
+    redhat_customer_support_case_number: "{{ create_case_result['json']['location'] | regex_findall('.*/([0-9]+)')[0]}}"
 
 # Print redhat_customer_support_case_number variable
 - name: Print Case Number
