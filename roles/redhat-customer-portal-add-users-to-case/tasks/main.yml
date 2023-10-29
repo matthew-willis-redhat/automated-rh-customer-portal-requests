@@ -24,13 +24,3 @@
   loop: "{{ redhat_customer_support_case_notify_users }}"
   run_once: true
   register: redhat_customer_support_case_notify_users_result
-
-
-# - name: Set redhat_customer_support_case_number fact
-#   ansible.builtin.set_fact:
-#     redhat_customer_support_case_number: "{{ create_case_result['json']['location'] | regex_findall('.*/([0-9]+)') }}"
-
-# # Print redhat_customer_support_case_number variable
-# - name: Print Case Number
-#   ansible.builtin.debug:
-#     var: redhat_customer_support_case_number

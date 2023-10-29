@@ -6,8 +6,14 @@ api_request_url: "{{ api_baseurl }}/{{ api_endpoint }}"
 
 redhat_case_product: "OpenShift Container Platform"
 redhat_case_product_version: "4.13"
+# Red Hat Case Product vesioning only supports Major/Minor. Example: 4.10
+
 redhat_case_summary: "Test Case"
+# Red Hat Customer Support Case title
+
 redhat_case_description: "This is a test"
+# Red Hat Customer Support Case description
+
 redhat_case_severity: "4 (Low)"
 # Case Severity Options
 # 4 (Low)

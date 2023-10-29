@@ -1,31 +1,45 @@
-Role Name
+Red Hat Customer Portal Add File to Case
 =========
 
-A brief description of the role goes here.
+Add an attachment to a previously created Red Hat Customer Support Case.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+`redhat_customer_portal_token` variable needs to be defined. To generate an offline token, visit the [API Tokens page](https://access.redhat.com/management/api) and click the Generate Token button. Remember to properly secure this variable, as this token is associated with your account.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
-
-Dependencies
-------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+|Variable||
+|:---|:---|
+|redhat_customer_support_attach_file|File location of the file you plan to attach to case|
+|redhat_customer_support_case_number|Red Hat Customer Support case number|
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+    ---
+    - name: Attach file to Support Case on Red Hat Customer Portal
+      hosts: localhost
+      connection: local
+      gather_facts: false
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+      vars:
+        redhat_customer_portal_token:
+          - *GENERATED_NUMBER_FROM_RED_HAT_OFFLINE_TOKEN*
+        redhat_customer_support_attach_file: "/tmp/myfile.txt"
+        redhat_customer_support_case_number: "0123456"        
+
+      tasks:
+        - name: "[INCLUDE ROLE] - Red Hat Customer Portal Authentication"
+          ansible.builtin.include_role:
+            name: redhat-customer-portal-authentication
+            
+        - name: "[INCLUDE ROLE] - Red Hat Customer Portal Add File To Case"
+          ansible.builtin.include_role:
+            name: redhat-customer-portal-add-file-to-case
+    ...
 
 License
 -------
@@ -35,4 +49,4 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+[Matt Willis](https://github.com/matthew-willis-redhat)

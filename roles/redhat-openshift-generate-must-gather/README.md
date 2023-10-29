@@ -1,31 +1,44 @@
-Role Name
+Red Hat OpenShift Generate Must Gather
 =========
 
-A brief description of the role goes here.
+Generate `must-gather` for Red Hat OpenShift cluster using `oc adm must-gather` command.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+OpenShift Client tools must be installed prior to running `oc adm must-gather` command. The role will attempt to install openshift-client tools if it's not found locally on operating system.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
-
-Dependencies
-------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+|Variable||
+|:---|:---|
+|openshift_version| Ex: "4.14.0"|
+|openshift_client_filename| Ex: openshift-client-linux.tar.gz|
+|openshift_client_tmp_dir|Ex: "/tmp/ocp-client"|
+|openshift_client_bin_dir|Ex: "/usr/local/bin/"|
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+    ---
+    - name: List Red Hat Customer Support Current User
+      hosts: localhost
+      connection: local
+      gather_facts: false
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+      vars:
+        openshift_version: "4.14.0"
+        openshift_client_filename: "openshift-client-linux.tar.gz"
+        openshift_client_tmp_dir: "/tmp/ocp-client"
+        openshift_client_bin_dir: "/usr/local/bin/"
+
+      tasks:
+        - name: "[INCLUDE ROLE] - Red Hat OpenShift Generate Must Gather"
+          ansible.builtin.include_role:
+            name: redhat-openshift-generate-must-gather
+
+    ...
 
 License
 -------
@@ -35,4 +48,4 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+[Matt Willis](https://github.com/matthew-willis-redhat)

@@ -6,7 +6,7 @@
   block:
     - name: Check for OC installer
       ansible.builtin.stat:
-        path: /usr/local/bin/oc
+        path: "{{ openshift_client_bin_dir }}/oc"
       register: oc_install
 
     # Install OpenShift CLI tools if the oc command is not found in /usr/local/bin/
