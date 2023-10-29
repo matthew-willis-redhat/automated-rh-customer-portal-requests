@@ -32,7 +32,63 @@ rh_customer_portal_token: *INSERT_OFFLINE_TOKEN_HERE*
 
 If the offline token is invalid or if the playbooks are unable to authenticate, try regenerating the token.
 
-### 
+### Playbook Examples
+
+#### Create Red Hat Customer Support Case for OpenShift Container Platform
+
+```yaml
+---
+- name: Create Support Case on Red Hat Customer Portal
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars_files:
+    - vars/redhat-customer-portal-token.yml
+    - vars/redhat-create-customer-support-case.yml
+
+  tasks:
+    - name: "[INCLUDE ROLE] - Red Hat Customer Portal Authentication"
+      ansible.builtin.include_role:
+        name: redhat-customer-portal-authentication
+
+    - name: "[INCLUDE ROLE] - Red Hat Customer Portal Create Case"
+      ansible.builtin.include_role:
+        name: redhat-customer-portal-create-case
+...
+```
+
+```bash
+ansible-playbook redhat-customer-portal-create-case.yml --ask-vault-pass
+```
+
+#### Add Attachment to Red Hat Customer Support Case
+
+```yaml
+---
+- name: Add Attachment to Support Case on Red Hat Customer Portal
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars_files:
+    - vars/redhat-customer-portal-token.yml
+    - vars/redhat-create-customer-support-case.yml
+
+  tasks:
+    - name: "[INCLUDE ROLE] - Red Hat Customer Portal Authentication"
+      ansible.builtin.include_role:
+        name: redhat-customer-portal-authentication
+
+    - name: "[INCLUDE ROLE] - Red Hat Customer Portal Add File To Case"
+      ansible.builtin.include_role:
+        name: redhat-customer-portal-add-file-to-case
+...
+```
+
+```bash
+ansible-playbook redhat-customer-portal-add-file-to-case.yml --ask-vault-pass
+```
 
 ## References
 
