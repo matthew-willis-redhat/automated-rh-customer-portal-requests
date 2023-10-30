@@ -14,6 +14,8 @@
       summary: "{{ redhat_case_summary }}"
       description: "{{ redhat_case_description }}"
       severity: "{{ redhat_case_severity }}"
+      openshiftClusterID: "{{ ocp_cluster_id }}"
+      openshiftClusterVersion: "{{ ocp_cluster_version }}"
     status_code: [200, 201]
     return_content: true
   run_once: true

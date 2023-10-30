@@ -5,8 +5,10 @@ api_endpoint: v1/cases
 api_request_url: "{{ api_baseurl }}/{{ api_endpoint }}"
 
 redhat_case_product: "OpenShift Container Platform"
-redhat_case_product_version: "4.13"
+redhat_case_product_version: "{{ ocp_cluster_version_short }}"
 # Red Hat Case Product vesioning only supports Major/Minor. Example: 4.10
+# ocp_cluster_version_short is using 'oc get clusterversion' to extract the short version of OCP
+# This variable can be overwritten
 
 redhat_case_summary: "Test Case"
 # Red Hat Customer Support Case title
