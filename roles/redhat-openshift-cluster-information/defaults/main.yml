@@ -1,0 +1,5 @@
+---
+# defaults file for redhat-openshift-generate-must-gather
+ocp_cluster_id:
+ocp_cluster_version:
+ocp_cluster_version_short:

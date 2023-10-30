@@ -1,0 +1,64 @@
+---
+# tasks file for redhat-openshift-cluster-information
+# Get Cluster ID and store it as a variable
+- name: Capture Cluster ID
+  block:
+
+    # Capture cluster ID from currently logged in cluster
+    - name: Get ClusterID from cluster
+      ansible.builtin.shell:
+        cmd: oc get clusterversion -o jsonpath='{.items[].spec.clusterID}{"\n"}'
+      changed_when: false
+      register: cluster_id_results
+
+    # Set ocp_cluster_id variable for Red Hat Customer Support information
+    - name: Set fact for ocp_cluster_id for Red Hat Customer Support information
+      ansible.builtin.set_fact:
+        ocp_cluster_id: "{{ cluster_id_results['stdout'] }}"
+
+    # Display cluster ID
+    - name: Print OCP Cluster ID
+      ansible.builtin.debug:
+        var: ocp_cluster_id
+
+# Get Cluster Version and store it as a variable
+    - name: Capture Cluster Version
+      block:
+
+        # Capture cluster version from currently logged in cluster
+        - name: Get ClusterVersion from cluster
+          ansible.builtin.shell:
+            cmd: oc get clusterversion -o jsonpath='{.items[].status.desired.version}'
+          changed_when: false
+          register: cluster_version_results
+
+        #  # Display cluster version results
+        # - name: Print OCP Cluster Version
+        #   ansible.builtin.debug:
+        #     var: cluster_version_results
+
+        # Set ocp_cluster_version variable for Red Hat Customer Support information
+        - name: Set fact for ocp_cluster_version for Red Hat Customer Support information
+          ansible.builtin.set_fact:
+            ocp_cluster_version: "{{ cluster_version_results['stdout'] }}"
+
+        # Display cluster version
+        - name: Print OCP Cluster Version
+          ansible.builtin.debug:
+            var: ocp_cluster_version
+
+        # Set ocp_cluster_version_short variable for Red Hat Customer Support information
+        - name: Set fact for ocp_cluster_version_short for Red Hat Customer Support information
+          ansible.builtin.set_fact:
+            ocp_cluster_version_short: "{{ (cluster_version_results['stdout_lines'] | first).split('.')[0:2] | join('.') }}"
+
+        # Display cluster version short
+        - name: Print OCP Cluster Version short
+          ansible.builtin.debug:
+            var: ocp_cluster_version_short
+
+        # Set redhat_case_product_version variable for Red Hat Customer Support information
+        - name: Set fact for redhat_case_product_version for Red Hat Customer Support information
+          ansible.builtin.set_fact:
+            redhat_case_product_version: "{{ ocp_cluster_version_short }}"
+...
