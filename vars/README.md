@@ -55,3 +55,23 @@ redhat_customer_portal_token: *GENERATED_NUMBER_FROM_RED_HAT_OFFLINE_TOKEN*
 
 !!!Note
     Use Ansible Vault to encrypt this file
+
+### Encrypting personal customer portal token
+
+Using Ansible Vault, you can encrypt sensitive information with Ansible. In this case, it's a simple command to encrypt:
+
+#### Encrypt
+
+```bash
+ansible-vault encrypt redhat-customer-support-token.yml
+```
+
+#### Using Ansible Vault file with a Playbook
+
+Using your protected credentials with a playbook? Just add the flag `--ask-vault-pass` to the end of your command.
+
+```bash
+ansible-playbook run-this-playbook.yml --ask-vault-pass
+```
+
+Reference the [Ansible Vault](https://docs.ansible.com/ansible/latest/vault_guide/index.html) documenation for more information.
