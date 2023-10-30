@@ -1,6 +1,2 @@
 ---
 # defaults file for redhat-openshift-generate-must-gather
-openshift_version: "4.14.0"
-openshift_client_filename: openshift-client-linux.tar.gz
-openshift_client_tmp_dir: "/tmp/ocp-client"
-openshift_client_bin_dir: "/usr/local/bin/"
