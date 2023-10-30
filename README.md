@@ -34,6 +34,10 @@ If the offline token is invalid or if the playbooks are unable to authenticate, 
 
 ### Playbook Examples
 
+!!!info
+
+    Please refer to [vars/README.md](./vars/README.md) documentation relating to vars_files - redhat-create-customer-support-case.yml
+
 #### Create Red Hat Customer Support Case for OpenShift Container Platform
 
 ```yaml
