@@ -1,6 +1,6 @@
 ---
 #Create case on Red Hat Customer Portal
-- name: Create case on Red Hat Customer Portal
+- name: Create case on Red Hat Customer Portal for OpenShift Container Platform
   ansible.builtin.uri:
     url: "{{ api_request_url }}"
     method: POST
@@ -8,14 +8,7 @@
       accept: application/json
       Authorization: "Bearer {{ access_token }}"
     body_format: json
-    body:
-      product: "{{ redhat_case_product }}"
-      version: "{{ redhat_case_product_version }}"
-      summary: "{{ redhat_case_summary }}"
-      description: "{{ redhat_case_description }}"
-      severity: "{{ redhat_case_severity }}"
-      openshiftClusterID: "{{ ocp_cluster_id }}"
-      openshiftClusterVersion: "{{ ocp_cluster_version }}"
+    body: "{{ lookup('ansible.builtin.template', 'openshift.json.j2') }}"
     status_code: [200, 201]
     return_content: true
   run_once: true
