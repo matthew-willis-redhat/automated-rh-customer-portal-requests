@@ -1,5 +1,5 @@
 ---
-- name: Create Support Case on Red Hat Customer Portal with OpenShift Must Gather
+- name: List Attachments added to Support Case on Red Hat Customer Portal
   hosts: localhost
   connection: local
   gather_facts: false
@@ -40,24 +40,4 @@
     - name: "[INCLUDE ROLE] - Red Hat OpenShift Cluster Information"
       ansible.builtin.include_role:
         name: redhat-openshift-cluster-information
-
-    - name: "[INCLUDE ROLE] - Red Hat OpenShift Generate Must Gather"
-      ansible.builtin.include_role:
-        name: redhat-openshift-generate-must-gather
-
-    - name: "[INCLUDE ROLE] - Red Hat Customer Portal Authentication"
-      ansible.builtin.include_role:
-        name: redhat-customer-portal-authentication
-
-    - name: "[INCLUDE ROLE] - Red Hat Customer Portal Create Case"
-      ansible.builtin.include_role:
-        name: redhat-customer-portal-create-case
-
-    - name: "[INCLUDE ROLE] - Red Hat Customer Portal Add File to Case"
-      ansible.builtin.include_role:
-        name: redhat-customer-portal-add-file-to-case
-
-    # - name: "[INCLUDE ROLE] - Red Hat Customer Portal Add Comment to Case"
-    #   ansible.builtin.include_role:
-    #     name: redhat-customer-portal-add-case-comment
 ...
