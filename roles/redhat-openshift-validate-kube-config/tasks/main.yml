@@ -14,14 +14,14 @@
       ansible.builtin.set_fact:
         kubeconfig: "{{ lookup('ansible.builtin.env', 'KUBECONFIG', default='~/.kube/config') }}"
 
-    # Validate and proceed if either the KUBECONFIG environment variable is defined or if the 
+    # Validate and proceed if either the KUBECONFIG environment variable is defined or if the
     # ~/.kube/config file exists. There are no checks to validate if this is the correct cluster.
     - name: "Assert KUBECONFIG or or ~/.kube/config exists"
       ansible.builtin.assert:
         that: >
           (kubeconfig is defined and kubeconfig | length) > 0 or
           (kubeconfig_file['stat']['exists'] != false)
-        fail_msg: 
+        fail_msg:
           - "~/.kube/config is missing or KUBECONFIG environment variable is undefined."
           - "Log into correct Red Hat OpenShift Cluster, generate login token, and execute oc login."
           - "Re-run playbook after valid ~/.kube/config is generated."
