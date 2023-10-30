@@ -25,7 +25,7 @@ Example Playbook
       tasks:
         - name: "[INCLUDE ROLE] - Red Hat OpenShift Validate Kube Config"
           ansible.builtin.include_role:
-          name: redhat-openshift-validate-kube-config
+            name: redhat-openshift-validate-kube-config
 
     ...
 
