@@ -13,6 +13,8 @@ Role Variables
 
 |Variable||
 |:---|:---|
+|ocp_cluster_id|This will be provided from redhat-openshift-cluster-information role|
+|ocp_cluster_version|This will be provided from redhat-openshift-cluster-information role|
 |redhat_customer_support_case_number|Red Hat Customer Support case number|
 |redhat_case_product|Ex: "OpenShift Container Platform"|
 |redhat_case_product_version|Ex: "4.13", Red Hat Case Product vesioning only supports Major/Minor.|
