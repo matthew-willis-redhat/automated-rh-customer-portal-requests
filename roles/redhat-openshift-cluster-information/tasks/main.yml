@@ -50,7 +50,7 @@
         # Set ocp_cluster_version_short variable for Red Hat Customer Support information
         - name: Set fact for ocp_cluster_version_short for Red Hat Customer Support information
           ansible.builtin.set_fact:
-            ocp_cluster_version_short: "{{ (cluster_version_results['stdout_lines'] | first).split('.')[0:2] | join('.') }}"
+            ocp_cluster_version_short: "{{ (cluster_version_results['stdout_lines'][0] | regex_findall('^[0-9]*\\.[0-9]*')) | first }}"
 
         # Display cluster version short
         - name: Print OCP Cluster Version short
